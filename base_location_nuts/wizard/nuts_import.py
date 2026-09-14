@@ -207,7 +207,13 @@ class NutsImport(models.TransientModel):
         self._load_countries()
         query = self._get_query()
         response = requests.get(
-            ENDPOINT, params={"format": "json", "query": query}, timeout=120
+            ENDPOINT,
+            params={"format": "json", "query": query},
+            headers={
+                "User-Agent": "Mozilla/5.0 (compatible; OdooNutsImport/1.0)",
+                "Accept": "application/sparql-results+json",
+            },
+            timeout=120,
         )
         try:
             response.raise_for_status()
